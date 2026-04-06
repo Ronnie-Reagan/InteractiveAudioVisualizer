@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Audio Visualizer</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="page">
+        <section class="hero">
+            <div>
+                <h1>Interactive Audio Visualizer<br />Six-String Resonance Demo</h1>
+                <p>
+                    This Demo-Application treats the selected string like a resonant acoustic path. Drag a finger along the
+                    neck to change that string's speaking length and note, then push audio through it from an internal
+                    pluck, the microphone, or an uploaded file.
+                </p>
+                <div class="pill-row">
+                    <div class="pill">6 strings · E A D G B E</div>
+                    <div class="pill">Continuous slide or fret snap</div>
+                    <div class="pill">Mic / file / pluck source</div>
+                    <div class="pill">True audio logic</div>
+                </div>
+            </div>
+            <div class="hero-note">
+                <h2>What this demo-project is actually doing</h2>
+                <p>
+                    Incoming audio is not being perfectly repitched like a studio-grade 'spectral shifter', it is being
+                    passed through a tunable string/body resonance model so the selected string and finger position
+                    reshape the tone in a way that still feels intuitive.
+                </p>
+            </div>
+        </section>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <section class="panel">
+                    <h3>Audio source</h3>
+                    <div class="grid">
+                        <div class="row">
+                            <label for="sourceMode">Source mode</label>
+                            <select id="sourceMode">
+                                <option value="pluck">Internal pluck only</option>
+                                <option value="mic">Microphone</option>
+                                <option value="file">Uploaded audio file</option>
+                            </select>
+                        </div>
+
+                        <div class="row two">
+                            <button id="startAudioBtn">Start audio</button>
+                            <button id="stopInputBtn">Stop input</button>
+                        </div>
+
+                        <div class="row">
+                            <label for="audioFile">Audio file</label>
+                            <input id="audioFile" type="file" accept="audio/*" disabled />
+                        </div>
+
+                        <div class="row two">
+                            <div class="row">
+                                <label for="wetMix">Wet mix (Modulated)</label>
+                                <input id="wetMix" type="range" min="0" max="1" step="0.01" value="0.50" />
+                            </div>
+                            <div class="row">
+                                <label for="dryMix">Dry mix (Source)</label>
+                                <input id="dryMix" type="range" min="0" max="1" step="0.01" value="0.10" />
+                            </div>
+                        </div>
+
+                        <div class="row two">
+                            <div class="row">
+                                <label for="sourceGain">Source gain</label>
+                                <input id="sourceGain" type="range" min="0" max="1.0" step="0.01" value="0.5" />
+                            </div>
+                            <div class="row">
+                                <label for="pluckStrength">Pluck strength</label>
+                                <input id="pluckStrength" type="range" min="0.05" max="1.8" step="0.01" value="0.9" />
+                            </div>
+                        </div>
+
+                        <label class="checkbox">
+                            <input id="snapFrets" type="checkbox" checked />
+                            <span>Snap finger position to frets</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Live state</h3>
+                    <div class="mini-stats">
+                        <div class="status-card">
+                            <div class="k">String</div>
+                            <div class="v" id="statString">Low E</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="k">Note</div>
+                            <div class="v" id="statNote">E2</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="k">Frequency</div>
+                            <div class="v" id="statFreq">82.41 Hz</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="k">Fret</div>
+                            <div class="v" id="statFret">0.00</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="k">Input mode</div>
+                            <div class="v" id="statSource">Pluck</div>
+                        </div>
+                        <div class="status-card">
+                            <div class="k">Signal</div>
+                            <div class="v" id="statSignal">Idle</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Status / notes</h3>
+                    <div class="help" id="statusText">
+                        Press <strong>Start audio</strong>, then click or touch a string. Drag along the neck to slide.
+                        Upper strings are darker and heavier while lower strings are brighter and tighter.
+                    </div>
+                </section>
+            </aside>
+
+            <section class="panel visual-panel">
+                <div class="visual-head">
+                    <div>
+                        <h3>Test surface</h3>
+                        <div class="sub">Click / touch a string, then drag across the neck to move the speaking point.
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-wrap">
+                    <canvas id="instrumentCanvas"></canvas>
+                </div>
+                <div class="footer-note">
+                    This demo-project favors believable interaction over fake DSP ideas.
+                    The selected string's note controls a resonance model with harmonic emphasis, damping, and body coloration.
+                    The goal is to make this browser demo is to provide a way to intuitively and visually assist learning.
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+
+</html>
