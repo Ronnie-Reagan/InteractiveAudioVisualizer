@@ -551,27 +551,6 @@ function drawBackground(layout) {
     ctx.fill();
     ctx.restore();
 
-    const bodyGrad = ctx.createLinearGradient(layout.bodyX, layout.neckTop - 60, state.width, layout.neckBottom + 60);
-    bodyGrad.addColorStop(0, '#68472b');
-    bodyGrad.addColorStop(0.55, '#8f6741');
-    bodyGrad.addColorStop(1, '#4a301b');
-
-    ctx.save();
-    const bodyCx = layout.bodyX + layout.bodyWidth * 0.55;
-    const bodyCy = state.height * 0.5;
-    ctx.beginPath();
-    ctx.ellipse(bodyCx, bodyCy, layout.bodyWidth * 0.84, layout.neckHeight * 0.52, 0, 0, Math.PI * 2);
-    ctx.fillStyle = bodyGrad;
-    ctx.fill();
-    ctx.restore();
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.ellipse(layout.bodyX + layout.bodyWidth * 0.42, state.height * 0.5, layout.bodyWidth * 0.18, layout.neckHeight * 0.12, 0, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(18, 12, 8, 0.86)';
-    ctx.fill();
-    ctx.restore();
-
     ctx.fillStyle = '#3a2a1a';
     roundRect(ctx, layout.headX, layout.neckTop + 8, layout.headWidth + 34, layout.neckHeight - 16, 18);
     ctx.fill();
